@@ -36,7 +36,7 @@ export default class LoginScene extends Component {
                         <TouchableHighlight
                           style={styles.actionRight}
                           onPress={this.onForgetPwPress}
-                          underlayColor={'#e0e0e0'}
+                          underlayColor={'#d8d8d8'}
                         >
                           <Text style = {[styles.actionRight, styles.label, styles.btnText, styles.btnTextRight]}>忘记密码</Text>
                         </TouchableHighlight>
