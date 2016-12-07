@@ -32,19 +32,51 @@ export default class LoginScene extends Component {
                         </Text>
                         <TextInput style = {styles.input}/>
                     </View>
-                    <TouchableHighlight style = {styles.actionButton} onPress={this.onLoginPress}>
+                    <View style = {[styles.action, styles.actionPaddingTop]}>
+                        <TouchableHighlight
+                          style={styles.actionRight}
+                          onPress={this.onForgetPwPress}
+                          underlayColor={'#e0e0e0'}
+                        >
+                          <Text style = {[styles.actionRight, styles.label, styles.btnText, styles.btnTextRight]}>忘记密码</Text>
+                        </TouchableHighlight>
+                    </View>
+                    <TouchableHighlight
+                      style = {styles.actionButton}
+                      onPress={this.onLoginPress}
+                      underlayColor = {'#9d2525'}
+                    >
                         <Text style = {styles.actionButtonText} >Login</Text>
                     </TouchableHighlight>
                 </View>
                 <View style = {styles.bottomButtons}>
-                    <Text style = {styles.bottomButton}>简体中文</Text>
-                    <Text style = {styles.bottomButton}>English(US)</Text>
+                    <TouchableHighlight style = {styles.bottomButton} onPress={this.switchToCn}
+                          underlayColor={'#e0e0e0'}>
+                        <Text style = {[styles.btnText, styles.bottomButtonText]}>简体中文</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style = {styles.bottomButton} onPress={this.switchToEn}
+                          underlayColor={'#e0e0e0'}>
+                        <Text style = {[styles.btnText, styles.bottomButtonText]}>English(US)</Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         );
     }
 
+    onForgetPwPress() {
+      //todo
+        //console.log('onForgetPwPress');
+    }
+
     onLoginPress() {
+        //todo
+    }
+
+    switchToCn() {
+        //todo
+    }
+
+    switchToEn() {
         //todo
     }
 }
@@ -76,11 +108,19 @@ const styles = StyleSheet.create({
   actionNoFirst: {
     marginTop:30,
   },
+  actionPaddingTop: {
+    marginTop:14,
+  },
   actionButton: {
     height: 44,
+    alignItems: 'center',
     backgroundColor: '#8d4545',
     alignSelf: 'stretch',
     marginTop:50,
+  },
+  actionRight: {
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
   },
   actionButtonText: {
     height: 44,
@@ -88,6 +128,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#ffffff',
     alignSelf: 'stretch',
+  },
+  btnText: {
+      padding: 10,
+  },
+  btnTextRight: {
+    textAlign: 'right',
   },
   label: {
     alignSelf: 'stretch',
@@ -104,17 +150,23 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#9f9f9f',
     height: 40,
+    paddingLeft: 10,
   },
   bottomButtons: {
     flexDirection: 'row',
     alignSelf: 'stretch',
-    marginLeft: 60,
-    marginRight: 60,
+    marginLeft: 55,
+    marginRight: 55,
     marginBottom: 30,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   bottomButton: {
+    flex: 1,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  bottomButtonText: {
     fontSize: 18,
     textAlign: 'center',
     color: '#333333',
