@@ -1,6 +1,7 @@
 /**
  * Persist storage helper.
  */
+import { AsyncStorage } from 'react-native';
 
 export function save(key, value, callback) {
     try {
