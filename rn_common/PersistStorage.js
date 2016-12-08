@@ -14,13 +14,15 @@ export function save(key, value, callback) {
     }
 }
 
-export async function retrieve(key, callback) {
+export function retrieve(key) {
     try {
         const value = await AsyncStorage.getItem(key);
-        if (callback !== undefined) {
-            callback(value);
-        }
+        return value;
     } catch (error) {
-        // error
+        return null;
     }
+}
+
+export async function retrieveAsync(key) {
+    return AsyncStorage.getItem(key);
 }
