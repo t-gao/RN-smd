@@ -11,6 +11,9 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+//import { SessionManager } from './SessionManager'
+var SessionManager = require("./SessionManager");
+
 export default class LoginScene extends Component {
     render() {
 
@@ -69,7 +72,8 @@ export default class LoginScene extends Component {
     }
 
     onLoginPress() {
-        //todo
+        //fixme: fake
+        SessionManager.setSession("BIG_FAKE_SESSION_TOKEN");
     }
 
     switchToCn() {

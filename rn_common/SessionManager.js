@@ -1,7 +1,8 @@
 
-import { cache } from './PersistStorage'
+//import { cache } from './PersistStorage'
+var cache = require("./PersistStorage");
 
-export function isLoggedIn() {
+function isLoggedIn() {
     var session = cache.retrieve('SESSION');
     if (session) {
         return true;
@@ -9,3 +10,10 @@ export function isLoggedIn() {
         return false;
     }
 }
+
+function setSession(session) {
+    cache.save('SESSION', session);
+}
+
+exports.isLoggedIn = isLoggedIn;
+exports.setSession = setSession;

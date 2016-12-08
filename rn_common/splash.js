@@ -9,7 +9,10 @@ import {
   View
 } from 'react-native';
 
+//import { SessionManager } from './SessionManager'
+var SessionManager = require("./SessionManager");
 import LoginScene from './LoginScene';
+import MainScene from './MainScene';
 
 export default class SplashScene extends Component {
     constructor(props) {
@@ -35,13 +38,22 @@ export default class SplashScene extends Component {
     }
 
     gotoNext() {
+
         const { navigator } = this.props;
 
         if (navigator) {
-            navigator.replace({
-                name: 'LoginScene',
-                component: LoginScene,
-            })
+            if (SessionManager.isLoggedIn()) {
+                navigator.replace({
+                    name: 'MainScene',
+                    component: MainScene,
+                })
+            } else {
+                navigator.replace({
+                    name: 'LoginScene',
+                    component: LoginScene,
+                })
+            }
+            
         }
     }
 }

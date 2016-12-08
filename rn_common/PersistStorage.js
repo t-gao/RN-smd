@@ -3,7 +3,7 @@
  */
 import { AsyncStorage } from 'react-native';
 
-export function save(key, value, callback) {
+async function save(key, value, callback) {
     try {
         await AsyncStorage.setItem(key, value);
         if (callback !== undefined) {
@@ -14,15 +14,19 @@ export function save(key, value, callback) {
     }
 }
 
-export function retrieve(key) {
+async function retrieve(key) {
     try {
-        const value = await AsyncStorage.getItem(key);
+        let value = await AsyncStorage.getItem(key);
         return value;
     } catch (error) {
         return null;
     }
 }
 
-export async function retrieveAsync(key) {
+async function retrieveAsync(key) {
     return AsyncStorage.getItem(key);
 }
+
+exports.save = save;
+exports.retrieve = retrieve;
+exports.retrieveAsync = retrieveAsync;
