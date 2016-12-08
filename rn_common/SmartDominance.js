@@ -3,42 +3,29 @@
  */
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Navigator,
-  TouchableHighlight
-} from 'react-native';
+import { Navigator } from 'react-native';
 
-import LoginScene from './LoginScene';
+import Splash from './splash'
 
 export default class SmartDominance extends Component {
   render() {
+    let defaultName = 'Splash';
+    let defaultComponent = Splash;
     return (
         <Navigator
-          initialRoute={{index: 0}}
+          initialRoute={{ name: defaultName, component: defaultComponent }}
+          configureScene={(route) => {
+            return Navigator.SceneConfigs.VerticalDownSwipeJump;
+          }}
           renderScene={this.navigatorRenderScene}
-          style={{flex: 1}}
         />
     );
   }
 
   navigatorRenderScene(route, navigator) {
-      switch (route.index) {
-          case 0:
-            return <LoginScene/>;
-          case 1:
-            return <Text main screen/>;
-      }
+    let Component = route.component;
+    return <Component {...route.params} navigator={navigator} />
   }
 }
 
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 36,
-        textAlign: 'center',
-        color: '#c39d9d',
-    },
-});
 

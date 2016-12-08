@@ -9,7 +9,14 @@ import {
   View
 } from 'react-native';
 
+import LoginScene from './LoginScene';
+
 export default class SplashScene extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
     render() {
         return(
             <View style = {styles.container}>
@@ -18,6 +25,24 @@ export default class SplashScene extends Component {
                 </Text>
             </View>
         );
+    }
+
+    componentDidMount() {
+        setTimeout(() => {this.gotoNext()}, 1500)
+        // setTimeout(function() {
+        //    this.gotoNext();
+        // }, 1500);
+    }
+
+    gotoNext() {
+        const { navigator } = this.props;
+
+        if (navigator) {
+            navigator.replace({
+                name: 'LoginScene',
+                component: LoginScene,
+            })
+        }
     }
 }
 
