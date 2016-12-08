@@ -13,8 +13,15 @@ import {
 
 //import { SessionManager } from './SessionManager'
 var SessionManager = require("./SessionManager");
+import MainScene from './MainScene';
 
 export default class LoginScene extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.onLoginPress = this.onLoginPress.bind(this);
+    }
+  
     render() {
 
         return (
@@ -74,6 +81,17 @@ export default class LoginScene extends Component {
     onLoginPress() {
         //fixme: fake
         SessionManager.setSession("BIG_FAKE_SESSION_TOKEN");
+
+        const { navigator } = this.props;
+
+        if (navigator) {
+
+            navigator.replace({
+                name: 'MainScene',
+                component: MainScene,
+            })
+
+        }
     }
 
     switchToCn() {

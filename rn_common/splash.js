@@ -17,20 +17,27 @@ import MainScene from './MainScene';
 export default class SplashScene extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {app_name: "Smart Dominance"};
     }
 
     render() {
+        let appName = this.state.app_name;
         return(
             <View style = {styles.container}>
-                <Text style = {styles.title}>
-                    Smart Dominance
-                </Text>
+                <Text style = {styles.title}>{appName}</Text>
             </View>
         );
     }
 
     componentDidMount() {
+        // this.setState({app_name: SessionManager.getSession()});//getSession()返回的是Promise！
+        SessionManager.getSessionAsync()
+        .then((val) => {
+            //this.setState({app_name: val});
+        })
+        .catch((err) => {
+            //this.setState({app_name: "err"});
+        });
         setTimeout(() => {this.gotoNext()}, 1500)
         // setTimeout(function() {
         //    this.gotoNext();
@@ -42,17 +49,39 @@ export default class SplashScene extends Component {
         const { navigator } = this.props;
 
         if (navigator) {
-            if (SessionManager.isLoggedIn()) {
-                navigator.replace({
-                    name: 'MainScene',
-                    component: MainScene,
-                })
-            } else {
+            SessionManager.getSessionAsync()
+            .then((session) => {
+                if (session !== null && session !== undefined && session.length > 0) {
+                    navigator.replace({
+                        name: 'MainScene',
+                        component: MainScene,
+                    })
+                } else {
+                    navigator.replace({
+                        name: 'LoginScene',
+                        component: LoginScene,
+                    })
+                }
+            })
+            .catch((err) => {
                 navigator.replace({
                     name: 'LoginScene',
                     component: LoginScene,
                 })
-            }
+            });
+
+            //FIXME: isLoggedIn 有问题！
+            // if (SessionManager.isLoggedIn()) {
+            //     navigator.replace({
+            //         name: 'MainScene',
+            //         component: MainScene,
+            //     })
+            // } else {
+            //     navigator.replace({
+            //         name: 'LoginScene',
+            //         component: LoginScene,
+            //     })
+            // }
             
         }
     }

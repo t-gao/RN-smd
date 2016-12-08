@@ -6,13 +6,18 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
 
-export default class SplashScene extends Component {
+var SessionManager = require("./SessionManager");
+import LoginScene from './LoginScene';
+
+export default class MainScene extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.onLogout = this.onLogout.bind(this);
     }
 
     render() {
@@ -21,8 +26,32 @@ export default class SplashScene extends Component {
                 <Text style = {styles.title}>
                     MAIN SCENE
                 </Text>
+                <TouchableHighlight
+                    style={styles.clickableButton}
+                    onPress={this.onLogout}
+                    underlayColor={'#d8d8d8'}
+                >
+                    <Text style = {styles.buttonText}>退出登录</Text>
+                </TouchableHighlight>
             </View>
         );
+    }
+
+    // FIXME: remove this
+    onLogout() {
+
+        SessionManager.clearSession();
+
+        const { navigator } = this.props;
+
+        if (navigator) {
+
+            navigator.replace({
+                name: 'LoginScene',
+                component: LoginScene,
+            })
+
+        }
     }
 }
 
@@ -39,4 +68,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#c39d9d',
   },
+  clickableButton: {
+    marginTop: 40,
+    alignSelf: 'center',
+    justifyContent: 'flex-end',
+  },
+  buttonText: {
+    height: 44,
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#ffffff',
+    alignSelf: 'stretch',
+  }
 });

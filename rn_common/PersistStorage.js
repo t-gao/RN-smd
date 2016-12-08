@@ -14,6 +14,14 @@ async function save(key, value, callback) {
     }
 }
 
+async function remove(key) {
+    try {
+        await AsyncStorage.removeItem(key);
+    } catch (error) {
+        // Error saving data
+    }
+}
+
 async function retrieve(key) {
     try {
         let value = await AsyncStorage.getItem(key);
@@ -28,5 +36,6 @@ async function retrieveAsync(key) {
 }
 
 exports.save = save;
+exports.remove = remove;
 exports.retrieve = retrieve;
 exports.retrieveAsync = retrieveAsync;
