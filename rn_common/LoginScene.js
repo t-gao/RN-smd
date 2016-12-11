@@ -7,12 +7,12 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
   TextInput,
   TouchableHighlight
 } from 'react-native';
 
-//import { SessionManager } from './SessionManager'
-var SessionManager = require("./SessionManager");
+var Api = require("./Api");
 import MainScene from './MainScene';
 
 export default class LoginScene extends Component {
@@ -34,13 +34,23 @@ export default class LoginScene extends Component {
                         <Text style = {styles.label}>
                             username / email / mobile
                         </Text>
-                        <TextInput style = {styles.input} blurOnSubmit={true}/>
+                        <TextInput
+                          style = {styles.input}
+                          blurOnSubmit={true}
+                          returnKeyType = {'next'}
+                          onChangeText = {(un) => this.setState({username: un})}
+                        />
                     </View>
                     <View style = {[styles.action, styles.actionNoFirst]}>
                         <Text style = {styles.label}>
                             password
                         </Text>
-                        <TextInput style = {styles.input}/>
+                        <TextInput
+                          style = {styles.input}
+                          secureTextEntry = {true}
+                          returnKeyType = {'go'}
+                          onChangeText = {(pw) => this.setState({password: pw})}
+                        />
                     </View>
                     <View style = {[styles.action, styles.actionPaddingTop]}>
                         <TouchableHighlight
@@ -79,19 +89,33 @@ export default class LoginScene extends Component {
     }
 
     onLoginPress() {
-        //fixme: fake
-        SessionManager.setSession("BIG_FAKE_SESSION_TOKEN");
-
-        const { navigator } = this.props;
-
-        if (navigator) {
-
-            navigator.replace({
-                name: 'MainScene',
-                component: MainScene,
-            })
-
+        var un = this.state.username;
+        var pw = this.state.password;
+        if (un == undefined || un == null || un === '') {
+            Alert.alert('please input your username!');
+            return;
         }
+        if (pw == undefined || pw == null || pw === '') {
+            Alert.alert('please input your password!');
+            return;
+        }
+
+        Api.login(un, pw, (result, msg) => {
+            if (result) {
+                const { navigator } = this.props;
+
+                if (navigator) {
+
+                    navigator.replace({
+                        name: 'MainScene',
+                        component: MainScene,
+                    })
+
+                }
+            } else {
+                Alert.alert(msg);
+            }
+        });
     }
 
     switchToCn() {

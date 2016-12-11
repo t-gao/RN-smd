@@ -7,10 +7,13 @@ async function save(key, value, callback) {
     try {
         await AsyncStorage.setItem(key, value);
         if (callback !== undefined) {
-            callback();
+            callback(true);
         }
     } catch (error) {
         // Error saving data
+        if (callback !== undefined) {
+            callback(false);
+        }
     }
 }
 

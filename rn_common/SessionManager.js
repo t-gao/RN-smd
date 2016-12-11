@@ -1,6 +1,7 @@
 
 //import { cache } from './PersistStorage'
 var cache = require("./PersistStorage");
+var network = require("./NetworkUtil");
 
 async function isLoggedIn() {
     try {
@@ -20,6 +21,10 @@ function setSession(session) {
     cache.save('SESSION', session);
 }
 
+function setSessionWithCallback(session, callback) {
+    cache.save('SESSION', session, callback);
+}
+
 function clearSession() {
     cache.remove('SESSION');
 }
@@ -30,5 +35,6 @@ async function getSessionAsync() {
 
 exports.isLoggedIn = isLoggedIn;
 exports.setSession = setSession;
+exports.setSessionWithCallback = setSessionWithCallback;
 exports.clearSession = clearSession;
 exports.getSessionAsync = getSessionAsync;
