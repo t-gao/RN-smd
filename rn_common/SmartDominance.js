@@ -14,9 +14,7 @@ export default class SmartDominance extends Component {
     return (
         <Navigator
           initialRoute={{ name: defaultName, component: defaultComponent }}
-          configureScene={(route) => {
-            return Navigator.SceneConfigs.VerticalDownSwipeJump;
-          }}
+
           renderScene={this.navigatorRenderScene}
         />
     );

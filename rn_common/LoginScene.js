@@ -38,6 +38,8 @@ export default class LoginScene extends Component {
                           style = {styles.input}
                           blurOnSubmit={true}
                           returnKeyType = {'next'}
+                          autoCapitalize = {'none'}
+                          autoCorrect = {false}
                           onChangeText = {(un) => this.setState({username: un})}
                         />
                     </View>
@@ -49,6 +51,8 @@ export default class LoginScene extends Component {
                           style = {styles.input}
                           secureTextEntry = {true}
                           returnKeyType = {'go'}
+                          autoCapitalize = {'none'}
+                          autoCorrect = {false}
                           onChangeText = {(pw) => this.setState({password: pw})}
                         />
                     </View>
