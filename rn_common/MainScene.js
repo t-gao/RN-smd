@@ -22,7 +22,7 @@ const drawerStyles = {
 }
 
 import Drawer from 'react-native-drawer';
-import MyMainView from './MainContent';
+import MyMainView from './MainTabLayout';
 import MyControlPanel from './ControlPanel';
 
 let counter = 0;
@@ -127,7 +127,8 @@ export default class MainScene extends Component {
         side={this.state.rightSide ? 'right' : 'left'}
         >
         <MyMainView
-          logout={this.onLogout} />
+          logout={this.onLogout}
+          openDrawer={() => this.drawer.open()} />
       </Drawer>
     );
   }
