@@ -10,8 +10,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
+  statusBar: {
+    height: 20,
+  },
   title: {
-    height: 50,
+    height: 44,
   },
   tabContainer: {
     flex: 1,
@@ -54,9 +57,9 @@ export default class MainTabLayout extends Component {
   render() {
     return (
       <View style={styles.container} >
+        <View style = {styles.statusBar} />
         <TitleBar style={styles.title} openDrawer={this.props.openDrawer} />
-        <TabViewAnimated
-            style={styles.tabContainer}
+        <TabViewAnimated style={styles.tabContainer}
             navigationState={this.state}
             renderScene={this._renderScene}
             renderHeader={this._renderHeader}

@@ -3,10 +3,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableHighlight
 } from 'react-native';
 
-export default class MainContent extends Component {
+export default class MainTitleBar extends Component {
 
     // constructor(props) {
     //     super(props);
@@ -15,12 +16,25 @@ export default class MainContent extends Component {
     // }
 
     render() {
-        return <TouchableHighlight
-                   onPress={() => {console.log("Titlebar Open Drawer Button onPress"); this.props.openDrawer();}}
-                   underlayColor = {'#9d2525'}
-               >
-                   <Text style = {styles.title} >TITLE BAR</Text>
-               </TouchableHighlight>
+        return <View style={styles.container}>
+                  <TouchableHighlight style = {styles.burg}
+                      onPress={() => {console.log("Titlebar Open Drawer Button onPress"); this.props.openDrawer();}}
+                  >
+                    <Image source={require('./img/title_burg_1.png')} style={{width: 44, height: 44}} />
+                  </TouchableHighlight>
+
+                  <TouchableHighlight style = {styles.avatar}
+                      onPress={() => {this.selectAvatar()}}
+                  >
+                    <Image source={require('./img/default_avatar.png')} style={{width: 44, height: 44}} />
+                  </TouchableHighlight>
+
+                  <Text style = {styles.name} >塘泥</Text>
+               </View>
+    }
+
+    selectAvatar = () => {
+      console.log("Titlebar Avatar onPress");
     }
 
     // openDrawer() {
@@ -29,10 +43,23 @@ export default class MainContent extends Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    height: 60,
-    fontSize: 36,
-    textAlign: 'center',
+  container: {
+    height:44,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#cccccc',
+  },
+  burg: {
+    width: 44,
+    height: 44,
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+  },
+  name: {
+    fontSize: 18,
     color: '#c39d9d',
   }
 });
