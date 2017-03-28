@@ -108,6 +108,7 @@ export default class LoginScene extends Component {
 
         Api.login(un, pw, (result, msg) => {
             if (result) {
+                console.log("login success");
                 const { navigator } = this.props;
 
                 if (navigator) {
@@ -119,7 +120,8 @@ export default class LoginScene extends Component {
 
                 }
             } else {
-                Alert.alert(msg);
+                console.log("login failure, msg: " + msg);
+                // Alert.alert(msg);FIXME
             }
         });
     }

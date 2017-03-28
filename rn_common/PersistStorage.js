@@ -4,12 +4,14 @@
 import { AsyncStorage } from 'react-native';
 
 async function save(key, value, callback) {
+    console.log("PersistStorage, save called, key: " + key + ", value: " + value);
     try {
         await AsyncStorage.setItem(key, value);
         if (callback !== undefined) {
             callback(true);
         }
     } catch (error) {
+        console.log("PersistStorage, error when save: " + error);
         // Error saving data
         if (callback !== undefined) {
             callback(false);

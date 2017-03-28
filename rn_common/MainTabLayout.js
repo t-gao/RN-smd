@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import TitleBar from './MainTitleBar';
 import InternalStaffView from './MainContent';//todo
+import MyLoginPinView from './MyLoginPinView';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +47,7 @@ export default class MainTabLayout extends Component {
   _renderScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <View style={[ styles.page, { backgroundColor: '#ff4081' } ]} />;
+      return <MyLoginPinView />;
     case '2':
       return <InternalStaffView logout={this.props.logout} />;
     default:
