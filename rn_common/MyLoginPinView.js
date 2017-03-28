@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PercentageCircle from 'react-native-percentage-circle';
+import * as Progress from 'react-native-progress';
 
 export default class MyLoginPinView extends Component {
     constructor(props) {
@@ -11,15 +12,27 @@ export default class MyLoginPinView extends Component {
     render() {
         return (
             <View style = {styles.container} >
-                <PercentageCircle style = {styles.circle}
-                         radius={100} bgcolor="#fff" borderWidth={4} percent={100} color={"#34495e"}>
-                    <View>
-                        <Text style={styles.pinLable}>当前pin码</Text>
-                    </View>
-                    <View>
-                        <Text style={styles.pin}>{this.state.curPin}</Text>
-                    </View>
-                </PercentageCircle>
+                <View style = {styles.circle_container} >
+                    <PercentageCircle style = {styles.circle}
+                            radius={100} bgcolor="#fff" borderWidth={2} percent={100} color={"#34495e"}>
+                        <View>
+                            <Text style={styles.pinLable}>当前pin码</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.pin}>{this.state.curPin}</Text>
+                        </View>
+                    </PercentageCircle>
+                    <Progress.CircleSnail style = {styles.progress_circle}
+                        size = {200}
+                        thickness = {8}
+                        spinDuration = {1000}
+                        color={[
+                        '#F44336',
+                        '#2196F3',
+                        '#009688',
+                        ]}
+                    />
+                </View>
             </View>
         );
     }
@@ -33,8 +46,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#d8d8d8',
   },
-  circle: {
+  circle_container: {
     marginTop: 30,
+  },
+  circle: {
+    position:'absolute',
+    top:0,
+  },
+  progress_circle: {
+    position:'absolute',
+    top:0,
   },
   pinLable: {
     fontSize: 14,
