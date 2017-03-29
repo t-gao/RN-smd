@@ -25,7 +25,7 @@ async function login(un, pw, callback) {
             SessionManager.setSessionWithCallback(token, (result) => {
                 if (result) {
                     callback(true);
-                } else{
+                } else {
                     callback(false, '');
                 }
             });

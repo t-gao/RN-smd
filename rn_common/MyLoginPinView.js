@@ -3,10 +3,18 @@ import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import PercentageCircle from 'react-native-percentage-circle';
 import * as Progress from 'react-native-progress';
 
+var cache = require("./PersistStorage");
+// var Api = require("./Api"); //FIXME
+var Api = require("./mock/MockApi");
+var SessionManager = require("./SessionManager");
+
+
 export default class MyLoginPinView extends Component {
     constructor(props) {
         super(props);
-        this.state = {curPin: "fake pin", showProgress: false, showLastPin: true, lastPin: 'fake last pin'};//fixme
+        this.state = {curPin: "fake pin", showProgress: false, showLastPin: false, lastPin: ''};//fixme
+        this.onRefreshPin = this.onRefreshPin.bind(this);
+        this.onLoadLastPin = this.onLoadLastPin.bind(this);
     }
 
     _renderProgress() {
@@ -40,36 +48,59 @@ export default class MyLoginPinView extends Component {
         if (this.state.showProgress) {
             return "#00000000";
         } else {
-            return "#34495e";
+            return "#0000dd";
         }
     }
 
     _lastPin() {
-        return this.state.lastPin;
+        console.log('_lastPin() called');
+        let lpin = this.state.lastPin;
+        return lpin;//.toString();
     }
 
     _renderLastPinView() {
         if (this.state.showLastPin) {
             return (
                 <View style = {styles.lastPin}>
-                    <Text style = {styles.lastPinText} > {this._lastPin()} </Text>
+                    <Text style = {styles.lastPinText} >{this._lastPin()}</Text>
                 </View>
             );
         } else {
             return (
-                <View style = {styles.lastPinHolder}>
-                </View>
+                <View style = {styles.lastPinHolder}/>
             );
         }
-
     }
 
     onRefreshPin() {
-        //todo
+        if (!this.state.showProgress) {
+            this.setState({showProgress: true});
+
+            cache.save('last_pin', this.state.curPin);
+
+            Api.refreshLoginPin((newPin) => {
+                this.setState({curPin: newPin, showProgress: false});
+            });
+        }
     }
 
     onLoadLastPin() {
-        //todo
+        console.log("onLoadLastPin called");
+        if (!this.state.showLastPin) {
+            // try {
+              SessionManager.getLastPin()
+              .then((lpin) => {
+                console.log("getLastPin: " + lpin);
+                this.setState({lastPin: lpin, showLastPin: true});
+              })
+              .catch((e) => {
+
+              });
+            // } catch (err) {
+            // }
+        } else {
+            this.setState({showLastPin: false});
+        }
     }
 
     render() {
@@ -97,11 +128,11 @@ export default class MyLoginPinView extends Component {
                         {this._renderLastPinView()}
                     </View>
                     <View style = {styles.bottomBtnsContainer}>
-                        <TouchableHighlight onPress={this.onRefreshPin}>
-                            <Text >更换PIN码</Text>
+                        <TouchableHighlight style = {styles.button} onPress={this.onRefreshPin} underlayColor={'#b18888'}>
+                            <Text style = {styles.btnText} >更换PIN码</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={this.onLoadLastPin}>
-                            <Text >前个PIN码</Text>
+                        <TouchableHighlight style = {styles.button} onPress={this.onLoadLastPin} underlayColor={'#b18888'}>
+                            <Text style = {styles.btnText} >前个PIN码</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -167,17 +198,18 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     marginTop: 50,
-    backgroundColor: '#ff0000',
   },
   lastPinContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     height: 60,
-    backgroundColor: '#0000ff',
   },
   lastPin: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 60,
-    width: 80,
+    width: 100,
     backgroundColor: '#fff',
   },
   lastPinHolder: {
@@ -192,7 +224,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 36,
-    backgroundColor: '#000099',
+  },
+  button: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    width: 100,
+    backgroundColor: '#c39d9d',
+  },
+  btnText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#ffffff',
   },
 });
 

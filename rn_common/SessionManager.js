@@ -3,6 +3,7 @@
 var cache = require("./PersistStorage");
 var network = require("./NetworkUtil");
 
+//FIXME: isLoggedIn 有问题！use getSessionAsync() instead
 async function isLoggedIn() {
     try {
         let session = await cache.retrieveAsync('SESSION');
@@ -33,8 +34,13 @@ async function getSessionAsync() {
     return cache.retrieve('SESSION');
 }
 
+async function getLastPin() {
+    return cache.retrieveAsync('last_pin');
+}
+
 exports.isLoggedIn = isLoggedIn;
 exports.setSession = setSession;
 exports.setSessionWithCallback = setSessionWithCallback;
 exports.clearSession = clearSession;
 exports.getSessionAsync = getSessionAsync;
+exports.getLastPin = getLastPin;

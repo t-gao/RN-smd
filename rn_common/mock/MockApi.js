@@ -16,4 +16,13 @@ async function login(un, pw, callback) {
             });
 }
 
+async function refreshLoginPin(callback) {
+    setTimeout(() => {
+            let ts = new Date().getTime();
+            let pin = Math.floor(ts / 1000).toString();
+            callback(pin);
+        }, 3000)
+}
+
 exports.login = login;
+exports.refreshLoginPin = refreshLoginPin;
