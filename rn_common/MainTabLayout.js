@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     flex: 1,
+    backgroundColor: '#00ff00',
   },
   page: {
     flex: 1,
