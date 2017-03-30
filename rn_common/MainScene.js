@@ -36,6 +36,7 @@ export default class MainScene extends Component {
       closedDrawerOffset:0,
       panOpenMask: .1,
       panCloseMask: .9,
+      captureGestures: 'closed',
       relativeDrag: false,
       panThreshold: .25,
       tweenHandlerOn: false,
@@ -127,6 +128,7 @@ export default class MainScene extends Component {
         acceptDoubleTap={this.state.acceptDoubleTap}
         acceptTap={this.state.acceptTap}
         acceptPan={this.state.acceptPan}
+        captureGestures={this.state.captureGestures}
         tapToClose={this.state.tapToClose}
         negotiatePan={this.state.negotiatePan}
         changeVal={this.state.changeVal}
