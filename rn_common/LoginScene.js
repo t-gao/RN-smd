@@ -12,8 +12,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-var Api = require("./Api"); //FIXME
-// var Api = require("./mock/MockApi");
+// var Api = require("./Api"); //FIXME
+var Api = require("./mock/MockApi");
 
 import MainScene from './MainScene';
 
@@ -106,9 +106,9 @@ export default class LoginScene extends Component {
             return;
         }
 
-        // FIXME: remove
-        un = 'hq01Admin';
-        pw = '12345678';
+        // // FIXME: remove
+        // un = 'hq01Admin';
+        // pw = '12345678';
 
         Api.login(un, pw, (result, msg) => {
             if (result) {

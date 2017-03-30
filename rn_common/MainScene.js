@@ -46,7 +46,7 @@ export default class MainScene extends Component {
       acceptDoubleTap: false,
       acceptTap: true,
       acceptPan: true,
-      tapToClose: true,
+      tapToClose: false,
       negotiatePan: false,
       rightSide: false,
     };
@@ -79,6 +79,10 @@ export default class MainScene extends Component {
     this.setState(frag);
   }
 
+  gotoSecurityCenter() {
+    console.log("gotoSecurityCenter callee");//todo
+  }
+
     // FIXME: remove this
     onLogout() {
 
@@ -101,6 +105,8 @@ export default class MainScene extends Component {
 
     var controlPanel = <MyControlPanel
       closeDrawer={() => this.drawer.close()}
+
+      gotoSecurityCenter = {() => {this.gotoSecurityCenter()}}
      />
     return (
       <Drawer
