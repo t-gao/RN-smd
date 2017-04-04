@@ -1,4 +1,5 @@
 const API_PATH_LOGIN = '/api/v1/login';
+const API_CUR_USER = '/api/v1/users/me';
 
 
 var network = require("./NetworkUtil");
@@ -34,4 +35,9 @@ async function login(un, pw, callback) {
     } );
 }
 
+async function getCurrentUserInfo(token, callback) {
+    network.get(API_CUR_USER, token, callback);
+}
+
 exports.login = login;
+exports.getCurrentUserInfo = getCurrentUserInfo;

@@ -12,8 +12,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-// var Api = require("./Api"); //FIXME
-var Api = require("./mock/MockApi");
+var Api = require("./Api"); //FIXME
+// var Api = require("./mock/MockApi");
 
 import MainScene from './MainScene';
 

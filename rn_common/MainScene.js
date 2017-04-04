@@ -10,6 +10,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+var Api = require("./Api"); //FIXME
 var SessionManager = require("./SessionManager");
 import LoginScene from './LoginScene';
 
@@ -54,6 +55,26 @@ export default class MainScene extends Component {
     this.onLogout = this.onLogout.bind(this);
   }
 
+  componentDidMount() {
+    SessionManager.getSessionAsync()
+        .then((session) => {
+            if (session !== null && session !== undefined && session.length > 0) {
+                this.getUserInfo(session);
+            } else {
+                this.onLogout();
+            }
+        })
+        .catch((err) => {
+            this.onLogout();
+        });
+  }
+
+  getUserInfo(token) {
+    Api.getCurrentUserInfo(token, (user) => {
+      this.setState({curUser: user});
+    });
+  }
+
   setDrawerType(type){
     this.setState({
       drawerType: type
@@ -81,33 +102,39 @@ export default class MainScene extends Component {
   }
 
   gotoSecurityCenter() {
-    console.log("gotoSecurityCenter callee");//todo
+    console.log("gotoSecurityCenter called");//todo
   }
 
-    // FIXME: remove this
-    onLogout() {
+  gotoSettings() {
+    console.log("gotoSettings called");//todo
+  }
 
-        SessionManager.clearSession();
+  // FIXME: remove this
+  onLogout() {
 
-        const { navigator } = this.props;
+    SessionManager.clearSession();
 
-        if (navigator) {
+    const { navigator } = this.props;
 
-            navigator.replace({
-                name: 'LoginScene',
-                component: LoginScene,
-            })
+    if (navigator) {
 
-        }
+      navigator.replace({
+          name: 'LoginScene',
+          component: LoginScene,
+      })
+
     }
+  }
 
   render() {
     // var _clsDrawer = this.closeDrawer;//.bind(this);
 
     var controlPanel = <MyControlPanel
       closeDrawer={() => this.drawer.close()}
-
       gotoSecurityCenter = {() => {this.gotoSecurityCenter()}}
+      gotoSettings = {() => {this.gotoSettings()}}
+      logout = {() => {this.onLogout()}}
+      user = {this.state.curUser}
      />
     return (
       <Drawer
